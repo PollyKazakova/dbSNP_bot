@@ -23,7 +23,7 @@ logger = telebot.logger
 logging.basicConfig(filename='dbSNP_bot.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
-bot = telebot.TeleBot('5914868585:AAGFH6U0jZFiTAIH6UBxgdserA2XDMn6Ykw')
+bot = telebot.TeleBot(<TOKEN>)
 
 
 @bot.message_handler(commands=['start'])
