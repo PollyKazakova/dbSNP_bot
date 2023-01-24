@@ -23,7 +23,7 @@ logger = telebot.logger
 logging.basicConfig(filename='dbSNP_bot.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
-bot = telebot.TeleBot(<TOKEN>)
+bot = telebot.TeleBot('<TOKEN>')
 
 
 @bot.message_handler(commands=['start'])
@@ -89,11 +89,15 @@ def callback_worker(call):
                          \n\nSend /stop for finish work.')
             else:
                 bot.send_message(message.chat.id, get_check_rs(url))
-                bot.send_message(message.chat.id, get_link_view(message.text, url))
-                bot.send_message(message.chat.id, 'Send /continue for checking else one rs. \
+                if len(get_check_rs(url)) < 100:
+                    bot.send_message(message.chat.id, 'Send /continue for checking else one rs. \
                          \n\nSend /start for enter to the main menu. \
                          \n\nSend /stop for finish work.')
-
+                else:
+                    bot.send_message(message.chat.id, get_link_view(message.text, url))
+                    bot.send_message(message.chat.id, 'Send /continue for checking else one rs. \
+                             \n\nSend /start for enter to the main menu. \
+                             \n\nSend /stop for finish work.')
 
 def get_overview():
     url = 'https://www.ncbi.nlm.nih.gov/projects/SNP/get_html.cgi?whichHtml=overview'
@@ -130,10 +134,15 @@ def continue_check_rs(message):
                          \n\nSend /stop for finish work.')
     else:
         bot.send_message(message.chat.id, get_check_rs(url))
-        bot.send_message(message.chat.id, get_link_view(message.text, url))
-        bot.send_message(message.chat.id, 'Send /continue for checking else one rs. \
+        if len(get_check_rs(url)) < 100:
+            bot.send_message(message.chat.id, 'Send /continue for checking else one rs. \
                          \n\nSend /start for enter to the main menu. \
                          \n\nSend /stop for finish work.')
+        else:
+            bot.send_message(message.chat.id, get_link_view(message.text, url))
+            bot.send_message(message.chat.id, 'Send /continue for checking else one rs. \
+                             \n\nSend /start for enter to the main menu. \
+                             \n\nSend /stop for finish work.')
 
 
 def get_check_rs(url):
